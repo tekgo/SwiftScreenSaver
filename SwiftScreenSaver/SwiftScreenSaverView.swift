@@ -12,48 +12,41 @@ import SpriteKit
 
 class SwiftScreenSaverView: ScreenSaverView {
     
-    var spriteView: GameView
+    var spriteView: GameView?
 
     override init?(frame: NSRect, isPreview: Bool) {
-        self.spriteView = GameView(frame: frame)
-        self.spriteView.ignoresSiblingOrder = true;
-        self.spriteView.showsFPS = false;
-        self.spriteView.showsNodeCount = false;
-        let scene = GameScene()
-        scene.size = frame.size;
-        scene.scaleMode = .AspectFit;
-        scene.backgroundColor = SKColor.blackColor()
-        
-        
         super.init(frame: frame, isPreview: isPreview)
         self.animationTimeInterval = 1.0
-        self.addSubview(self.spriteView)
-        self.spriteView.presentScene(scene)
         
     }
 
     required init?(coder: NSCoder) {
-        self.spriteView = GameView(frame: NSRect.zero)
-        self.spriteView.ignoresSiblingOrder = true;
-        self.spriteView.showsFPS = false;
-        self.spriteView.showsNodeCount = false;
-        let scene = GameScene()
-        scene.size = CGSize.zero;
-        scene.scaleMode = .AspectFit;
-        scene.backgroundColor = SKColor.blackColor()
-        self.spriteView.presentScene(scene)
-        
-        
         super.init(coder: coder)
-        self.animationTimeInterval = 1.0 / 30.0
-        self.addSubview(self.spriteView)
+        self.animationTimeInterval = 1.0
     }
     
     override var frame: NSRect {
         didSet
         {
-            self.spriteView.frame = frame
+            self.spriteView?.frame = frame
         }
+    }
+    
+    override func startAnimation() {
+        if self.spriteView == nil {
+            let spriteView = GameView(frame: self.frame)
+            spriteView.ignoresSiblingOrder = true;
+            spriteView.showsFPS = false;
+            spriteView.showsNodeCount = false;
+            let scene = GameScene()
+            scene.size = frame.size;
+            scene.scaleMode = .AspectFit;
+            scene.backgroundColor = SKColor.blackColor()
+            self.spriteView = spriteView
+            addSubview(spriteView)
+            spriteView.presentScene(scene)
+        }
+        super.startAnimation()
     }
     
 }
