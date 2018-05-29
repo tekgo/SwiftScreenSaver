@@ -40,8 +40,8 @@ class SwiftScreenSaverView: ScreenSaverView {
             spriteView.showsNodeCount = false;
             let scene = GameScene()
             scene.size = frame.size;
-            scene.scaleMode = .AspectFit;
-            scene.backgroundColor = SKColor.blackColor()
+            scene.scaleMode = .aspectFit;
+            scene.backgroundColor = SKColor.black
             self.spriteView = spriteView
             addSubview(spriteView)
             spriteView.presentScene(scene)

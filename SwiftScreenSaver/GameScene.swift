@@ -14,27 +14,27 @@ class GameScene: SKScene
     
     override var acceptsFirstResponder: Bool { return false }
 	
-    override func didMoveToView(view: SKView)
+    override func didMove(to view: SKView)
 	{
         self.resignFirstResponder()
-        self.userInteractionEnabled=false
+        self.isUserInteractionEnabled=false
     }
 	
 	
-    override func update(currentTime: CFTimeInterval)
+    override func update(_ currentTime: TimeInterval)
 	{
 		self.backgroundColor = NSColor(calibratedHue: 0.0, saturation: 0.0, brightness: CGFloat(0.5 + (sin(currentTime) * 0.5)), alpha: 1.0)
     }
     
-    func getImage(name: String) -> NSImage?
+    func getImage(_ name: String) -> NSImage?
     {
-        if let image = NSImage(named: name)
+        if let image = NSImage(named: NSImage.Name(rawValue: name))
         {
             return image
         }
         
-        let bundle = NSBundle(forClass: GameScene.self)
-        if let path = bundle.pathForResource(name, ofType: "png")
+        let bundle = Bundle(for: GameScene.self)
+        if let path = bundle.path(forResource: name, ofType: "png")
         {
             return NSImage(contentsOfFile: path)
         }
